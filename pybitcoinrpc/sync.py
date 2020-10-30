@@ -12,7 +12,7 @@ class Bitpole_RPC:
         response = []
         for command in commands:
             res = requests.post("https://w.bitpole.org/api/v1/rpc_execute", json={"command": " ".join(command)}).json()
-            response.append(res)
+            response.append(res["response"] if res["status"] else False)
 
         return response
 
@@ -42,14 +42,17 @@ class Client:
         else:
             return Bitpole_RPC()
 
-    def get_best_block_hash(self): return self.get_rpc().getbestblockhash()
-    def get_blockchain_info(self): return self.get_rpc().getblockchaininfo()
-
     def rpc_execute(self, commands):
         if type(commands) == str: commands = [commands]
 
         self.debug(f"> {sys.getsizeof(commands)}")
-        res = self.get_rpc().batch_([command.split(" ") for command in commands])
+
+        try:
+            res = self.get_rpc().batch_([command.split(" ") for command in commands])
+        except JSONRPCException as e:
+            self.debug(f"Error [{e}] (caused by pybitcoinrpc.Client.rpc_execute)")
+            return [False for x in commands]
+
         self.debug(f"< {sys.getsizeof(res)}")
 
         return res
@@ -101,7 +104,7 @@ class Client:
             time.sleep(0.05)
 
         with self.lock:
-            res = self.commands_buffer[fetch_id]
+            res = self.commands_buffer[fetch_id] if self.commands_buffer[fetch_id]["status"] == "completed" else False
             del self.commands_buffer[fetch_id]
 
         return res["response"]
