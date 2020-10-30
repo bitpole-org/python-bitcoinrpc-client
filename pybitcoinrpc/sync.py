@@ -23,10 +23,9 @@ class Client:
 
     def get_best_block_hash(self): return self.get_rpc().getbestblockhash()
     def get_blockchain_info(self): return self.get_rpc().getblockchaininfo()
-    def list_received_by_address(self, count): return self.get_rpc().listreceivedbyaddress(count)
 
     def rpc_command(self, command):
-        self.debug(f"> {command}")
+        self.debug("> %s" % command)
         res = self.get_rpc().batch_(command.split(" "))
-        self.debug(f"< {res}")
+        self.debug("< %s" % res)
         return res
