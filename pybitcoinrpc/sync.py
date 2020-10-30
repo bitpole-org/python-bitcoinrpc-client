@@ -71,8 +71,6 @@ class Client:
         if not self.rpc_daemon_polling:
             self.rpc_daemon()
 
-        print("commands_buffer %s" % self.commands_buffer)
-
         fetch_id = f"{uuid.uuid4()}"
 
         with self.lock:
@@ -80,6 +78,8 @@ class Client:
                 "command": command,
                 "status": "created"
             }
+
+        print("commands_buffer %s" % self.commands_buffer)
 
         while self.commands_buffer[fetch_id]["status"] != "completed":
             time.sleep(0.05)
