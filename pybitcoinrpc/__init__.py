@@ -1,1 +1,1 @@
-from sync import Client
+from pybitcoinrpc import Client
