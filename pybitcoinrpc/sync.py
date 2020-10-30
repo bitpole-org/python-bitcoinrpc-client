@@ -26,6 +26,6 @@ class Client:
 
     def rpc_command(self, command):
         self.debug(f"> {sys.getsizeof(command)}")
-        res = self.get_rpc().batch_(command.split(" "))
+        res = self.get_rpc().batch_([command.split(" ")])
         self.debug(f"< {sys.getsizeof(command)}")
         return res
