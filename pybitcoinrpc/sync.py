@@ -16,7 +16,7 @@ class Client:
         self.node_addr = node or self.node_addr
         self.connected = True
 
-        self.rpc_connection = AuthServiceProxy(f"http://{self.node_addr.replace("http://")}")
+        self.rpc_connection = AuthServiceProxy(f"http://{self.node_addr.replace("http://", "")}")
 
     def getbestblockhash(self):
         if not connected: raise Exception("Connect to bitcoin node")
