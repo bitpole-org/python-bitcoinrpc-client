@@ -1,4 +1,5 @@
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
+import sys
 
 class Client:
     def log(self, text): print(f"[Client] {text}")
@@ -12,15 +13,21 @@ class Client:
         self.debug = debug
         self.connected = False
 
-    def connect(self, node=None):
+    def get_rpc(self, node=None):
         self.node_addr = node or self.node_addr
         self.connected = True
 
-        self.node_addr = self.node_addr.replace("http://", "").replace("https://", "")
+        self.node_addr = self.node_addr.replace("http://", "").replace("https://", "") \
+            if "://" in self.node_addr else self.node_addr
 
-        self.rpc_connection = AuthServiceProxy(f"http://{self.node_addr}")
+        return AuthServiceProxy(f"http://{self.node_addr}")
 
-    def getbestblockhash(self):
-        if not self.connected: raise Exception("Connect to bitcoin node")
+    def get_best_block_hash(self): return self.get_rpc().getbestblockhash()
+    def get_blockchain_info(self): return self.get_rpc().getblockchaininfo()
+    def list_received_by_address(self, count): return self.get_rpc().listreceivedbyaddress(count)
 
-        return self.rpc_connection.getbestblockhash()
+    def rpc_command(self, command):
+        self.debug(f"> {sys.getsizeof(command)}")
+        res = self.get_rpc().batch_(command.split(" "))
+        self.debug(f"< {sys.getsizeof(res)}")
+        return res
