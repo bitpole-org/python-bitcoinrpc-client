@@ -5,12 +5,12 @@ class Client:
     def log(self, text): print(f"[Client] {text}")
 
     def debug(self, text):
-        if self.debug:
+        if self.debug_enabled:
             print(f"[sync.Client ~ debug] {text}")
 
-    def __init__(self, node=None, debug=False):
+    def __init__(self, node=None, debug_enabled=False):
         self.node_addr = node
-        self.debug = debug
+        self.debug_enabled = debug_enabled
         self.connected = False
 
     def get_rpc(self, node=None):
@@ -25,7 +25,7 @@ class Client:
     def get_blockchain_info(self): return self.get_rpc().getblockchaininfo()
 
     def rpc_command(self, command):
-        self.debug("> %s" % command)
+        self.debug(f"> {sys.getsizeof(command)}")
         res = self.get_rpc().batch_(command.split(" "))
-        self.debug("< %s" % res)
+        self.debug(f"< {sys.getsizeof(command)}")
         return res
