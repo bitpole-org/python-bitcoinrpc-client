@@ -22,3 +22,5 @@ class Client:
 
     def getbestblockhash(self):
         if not self.connected: raise Exception("Connect to bitcoin node")
+
+        return self.rpc_connection.getbestblockhash()
