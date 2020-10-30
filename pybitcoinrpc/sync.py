@@ -14,7 +14,6 @@ class Bitpole_RPC:
             res = requests.post("https://w.bitpole.org/api/v1/rpc_execute", json={"command": " ".join(command)}).json()
             response.append(res)
 
-        if len(response) == 1: response = response[0]
         return response
 
 class Client:
