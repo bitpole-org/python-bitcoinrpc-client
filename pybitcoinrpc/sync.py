@@ -1,8 +1,21 @@
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
+import requests
 import sys
 import uuid
 import threading
 import time
+
+class Bitpole_RPC:
+    def __init__(self): pass
+
+    def batch_(self, commands):
+        response = []
+        for command in commands:
+            res = requests.post("https://w.bitpole.org/api/v1/rpc_execute", json={"command": command}).json()
+            response.append(res)
+
+        if len(response) == 1: response = response[0]
+        return response
 
 class Client:
     def log(self, text): print(f"[Client] {text}")
@@ -24,7 +37,10 @@ class Client:
         if "://" not in self.node_addr:
             self.node_addr = f"http://{self.node_addr}"
 
-        return AuthServiceProxy(f"{self.node_addr}")
+        if self.node_addr:
+            return AuthServiceProxy(f"{self.node_addr}")
+        else:
+            return Bitpole_RPC()
 
     def get_best_block_hash(self): return self.get_rpc().getbestblockhash()
     def get_blockchain_info(self): return self.get_rpc().getblockchaininfo()
