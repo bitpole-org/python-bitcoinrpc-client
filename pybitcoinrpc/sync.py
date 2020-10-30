@@ -15,12 +15,11 @@ class Client:
 
     def get_rpc(self, node=None):
         self.node_addr = node or self.node_addr
-        self.connected = True
 
-        self.node_addr = self.node_addr.replace("http://", "").replace("https://", "") \
-            if "://" in self.node_addr else self.node_addr
+        if "://" not in self.node_addr:
+            self.node_addr = f"http://{self.node_addr}"
 
-        return AuthServiceProxy(f"http://{self.node_addr}")
+        return AuthServiceProxy(f"{self.node_addr}")
 
     def get_best_block_hash(self): return self.get_rpc().getbestblockhash()
     def get_blockchain_info(self): return self.get_rpc().getblockchaininfo()
