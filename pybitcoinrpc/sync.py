@@ -42,7 +42,7 @@ class Client:
         self.debug("RPC Daemon polling started")
 
         while True:
-            commands_package = [{"fetch_id": c, "fetch_command": self.commands_buffer[c]} for c in self.commands_buffer if self.commands_buffer[c]["status"] == "created"]
+            commands_package = [{"fetch_id": c, "fetch_command": self.commands_buffer[c]["command"]} for c in self.commands_buffer if self.commands_buffer[c]["status"] == "created"]
             if not commands_package:
                 continue
 
