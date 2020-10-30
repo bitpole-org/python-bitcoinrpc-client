@@ -62,7 +62,7 @@ class Client:
 
         self.debug("Preparing to launch daemon")
 
-        self.rpc_commands_polling_thread = threading.Thread(target=self.__rpc_commands_polling__, args=[])
+        self.rpc_commands_polling_thread = threading.Thread(target=self.__rpc_daemon_polling__, args=[])
         self.rpc_commands_polling_thread.daemon = True
         self.rpc_commands_polling_thread.start()
 
