@@ -10,7 +10,7 @@ class Client:
 
     def __init__(self, node=None, debug=False):
         self.node_addr = node
-        self.debug_enabled = debugd
+        self.debug_enabled = debug
         self.connected = False
 
     def get_rpc(self, node=None):
