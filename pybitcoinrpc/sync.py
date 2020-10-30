@@ -49,7 +49,7 @@ class Client:
             response = self.rpc_execute([c["fetch_command"] for c in commands_package])
 
             with self.lock:
-                for i, c in commands_package:
+                for i, c in enumerate(commands_package):
                     self.commands_buffer[c["fetch_id"]]["response"] = response[i]
                     self.commands_buffer[c["fetch_id"]]["status"] = "completed"
 
