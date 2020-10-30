@@ -88,4 +88,4 @@ class Client:
             res = self.commands_buffer[fetch_id]
             del self.commands_buffer[fetch_id]
 
-        return res
+        return res["response"]
