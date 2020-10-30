@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pybitcoinrpc",
-    version="0.1",
+    version="0.1.1",
     author="psylopunk",
     author_email="psylopunk@protonmail.com",
     description="Python module for Bitcoin RPC",
