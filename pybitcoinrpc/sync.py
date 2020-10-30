@@ -108,4 +108,4 @@ class Client:
             res = self.commands_buffer[fetch_id] if self.commands_buffer[fetch_id]["status"] == "completed" else False
             del self.commands_buffer[fetch_id]
 
-        return res["response"] if res["response"
+        return res["response"]
