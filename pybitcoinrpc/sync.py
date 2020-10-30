@@ -25,8 +25,8 @@ class Client:
     def get_blockchain_info(self): return self.get_rpc().getblockchaininfo()
     def list_received_by_address(self, count): return self.get_rpc().listreceivedbyaddress(count)
 
-    def rpc_command(self, command):
-        self.debug(f"> {sys.getsizeof(command)}")
+    def rpc_command(self, cmd):
+        self.debug(f"> {sys.getsizeof(cmd)}")
         res = self.get_rpc().batch_(command.split(" "))
-        self.debug(f"< {sys.getsizeof(res)}")
+        self.debug(f"< {sys.getsizeof(cmd)}")
         return res
