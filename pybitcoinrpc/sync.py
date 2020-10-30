@@ -81,12 +81,8 @@ class Client:
                 "status": "created"
             }
 
-        print("commands_buffer %s" % self.commands_buffer)
-
         while self.commands_buffer[fetch_id]["status"] != "completed":
             time.sleep(0.05)
-
-        print("commands_buffer %s" % self.commands_buffer)
 
         with self.lock:
             res = self.commands_buffer[fetch_id]
