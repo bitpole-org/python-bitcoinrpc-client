@@ -2,6 +2,7 @@ from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 import sys
 import uuid
 import threading
+import time
 
 class Client:
     def log(self, text): print(f"[Client] {text}")
