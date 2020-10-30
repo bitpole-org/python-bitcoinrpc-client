@@ -55,6 +55,7 @@ class Client:
 
         self.debug(f"< {sys.getsizeof(res)}")
 
+        if type(res) != list: res = [res]
         return res
 
     def __rpc_daemon_polling__(self):
@@ -107,4 +108,4 @@ class Client:
             res = self.commands_buffer[fetch_id] if self.commands_buffer[fetch_id]["status"] == "completed" else False
             del self.commands_buffer[fetch_id]
 
-        return res["response"]
+        return res["response"] if res["response"
