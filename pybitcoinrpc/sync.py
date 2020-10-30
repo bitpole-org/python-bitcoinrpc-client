@@ -34,8 +34,9 @@ class Client:
     def get_rpc(self, node=None):
         self.node_addr = node or self.node_addr
 
-        if "://" not in self.node_addr:
-            self.node_addr = f"http://{self.node_addr}"
+        if self.node_addr:
+            if "://" not in self.node_addr:
+                self.node_addr = f"http://{self.node_addr}"
 
         if self.node_addr:
             return AuthServiceProxy(f"{self.node_addr}")
