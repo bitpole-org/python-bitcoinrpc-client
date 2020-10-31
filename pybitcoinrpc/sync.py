@@ -47,11 +47,7 @@ class Client:
 
         self.debug(f"> {sys.getsizeof(commands)}")
 
-        try:
-            res = self.get_rpc().batch_([command.split(" ") for command in commands])
-        except JSONRPCException as e:
-            self.debug(f"Error [{e}] (caused by pybitcoinrpc.Client.rpc_execute)")
-            return [False for x in commands]
+        res = self.get_rpc().batch_([command.split(" ") for command in commands])
 
         self.debug(f"< {sys.getsizeof(res)}")
 
